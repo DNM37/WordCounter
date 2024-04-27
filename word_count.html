@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* Default light background color */
+            color: #000; /* Default light text color */
+            font-family: Arial, sans-serif;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a; /* Set dark background color */
+                color: #fff; /* Set dark text color */
+            }
+        }
+
+        textarea {
+            width: 50%;
+            height: 200px;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Word Counter</h1>
+    <p>A simple tool that does one thing and one thing only.</p>
+    <textarea id="textInput" placeholder="Type something..."></textarea>
+    <p>Word count: <span id="wordCount">0</span></p>
+
+    <script>
+        const textInput = document.getElementById('textInput');
+        const wordCount = document.getElementById('wordCount');
+
+        // Function to check if Dark Reader is active
+        function isDarkReaderActive() {
+            const darkReaderStyles = window.getComputedStyle(document.documentElement);
+            return darkReaderStyles.getPropertyValue('--darkreader-neutral-background-color') !== '';
+        }
+
+        // Function to update styles based on Dark Reader status
+        function updateStyles() {
+            if (isDarkReaderActive()) {
+                document.body.style.backgroundColor = '#1a1a1a'; // Set dark background color
+                document.body.style.color = '#fff'; // Set dark text color
+            } else {
+                document.body.style.backgroundColor = '#f0f0f0'; // Set light background color
+                document.body.style.color = '#000'; // Set light text color
+            }
+        }
+
+        // Update styles initially and on resize
+        updateStyles();
+        window.addEventListener('resize', updateStyles);
+
+        // Event listener for textarea input
+        textInput.addEventListener('input', function() {
+            const text = this.value.trim();
+            const words = text.split(/\s+/).filter(word => word !== '');
+            wordCount.textContent = words.length;
+        });
+    </script>
+</body>
+</html>
